@@ -60,8 +60,9 @@ const SetsCard: React.FC<SetsCardProps> = (props) => {
                                 Equipo 1:
                                 <input
                                     type="number"
-                                    value={team1Score}
-                                    onChange={(e) => setNumber1(Number(e.target.value))}
+                                    required
+                                    value={team1Score === 0 ? "" : team1Score}
+                                    onChange={(e) => setNumber1(e.target.value === "" ? 0 : Number(e.target.value))}
                                     disabled={ignoreforelo}
                                     className="mt-1 block w-24 px-4 py-2 border text-slate-700 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out hover:border-blue-500"
                                 />
@@ -72,8 +73,9 @@ const SetsCard: React.FC<SetsCardProps> = (props) => {
                                 Equipo 2:
                                 <input
                                     type="number"
-                                    value={team2Score}
-                                    onChange={(e) => setNumber2(Number(e.target.value))}
+                                    required
+                                    value={team2Score === 0 ? "" : team2Score}
+                                    onChange={(e) => setNumber2(e.target.value === "" ? 0 : Number(e.target.value))}
                                     disabled={ignoreforelo}
                                     className="mt-1 block w-24 px-4 py-2 border text-slate-700 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out hover:border-blue-500"
                                 />
@@ -116,7 +118,13 @@ const SetsCard: React.FC<SetsCardProps> = (props) => {
             <div className="flex justify-center mt-4">
                 <button
                     type="button"
-                    onClick={() => setShowGanador(!showGanador)}
+                    onClick={() => {
+                        setTeam("team1");
+                        setShowGanador(!showGanador)
+                        setNumber1(0);
+                        setNumber2(0);
+                        }
+                    }
                     className="px-4 py-2 rounded-full font-semibold transition duration-150 ease-in-out bg-slate-500 text-white hover:bg-slate-600"
                 >
                     {showGanador ? "Hay puntos" : "No hay puntos"}
