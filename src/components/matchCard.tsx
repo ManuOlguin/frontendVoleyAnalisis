@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 
 interface MatchCardProps {
   data: any;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 interface SetsCardProps {
-    key: Number;
+    key: number;
     keysita: string;
     onDataChange: (index: number, data: SetData) => void;
     team1Name: string[];
@@ -30,7 +30,7 @@ const SetsCard: React.FC<SetsCardProps> = (props) => {
     const [team1Score, setNumber1] = useState(0);
     const [team2Score, setNumber2] = useState(0);
     const [showGanador, setShowGanador] = useState(false);
-    const [setOrder, setSetOrder] = useState<number>(Number(props.keysita));
+    const [setOrder] = useState<number>(Number(props.keysita));
 
     useEffect(() => {
         console.log("Set Order", setOrder, team1Positions, team2Positions);

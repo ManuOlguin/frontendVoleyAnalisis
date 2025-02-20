@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useState } from 'react';
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 
 // Example: Fetch all players
@@ -61,7 +60,7 @@ export const submitMatchData = async (matchData: any) => {
             
         };
 
-        const response = await axios.post(`${API_BASE_URL}/api/addMatch`, matchDataBro);
+        await axios.post(`${API_BASE_URL}/api/addMatch`, matchDataBro);
         console.log('Match submitted:', matchData);
         console.log('Match submitted:', matchDataBro);
     } catch (error) {

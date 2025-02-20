@@ -1,10 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Head from "next/head";
-import { fetchPlayers, submitMatchData } from "../../utils/api";
+import { fetchPlayers } from "../../utils/api";
 import { Player } from "../../utils/types";
-import SetsCard from "@/components/setsCard";
-import { SetData } from "@/components/setsCard";
 import Link from "next/link";
 const Ranking: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);

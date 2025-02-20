@@ -9,7 +9,6 @@ export default function Home() {
   const [matchesLoading, setMatchesLoading] = useState(false);
 
   const [matches, setMatches] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchMatchesData = async () => {
       setMatchesLoading(true);
