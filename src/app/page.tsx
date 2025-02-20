@@ -16,7 +16,6 @@ export default function Home() {
       console.log('Matches:', data);
       setMatchesLoading(false);
       if (error) {
-        setError(error);
         return;
       }
       setMatches(data);
