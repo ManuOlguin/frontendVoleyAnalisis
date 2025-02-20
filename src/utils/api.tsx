@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { useState } from 'react';
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
 
 // Example: Fetch all players
@@ -16,6 +16,21 @@ export const fetchPlayers = async () => {
       }
     }
   };
+
+  export const fetchMatches = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/fullMatches`);
+      console.log('Matches:', response.data);
+      return { data: response.data, error: null };
+    } catch (error) {
+      if (axios.isAxiosError(error) && !error.response) {
+        return { data: null, error: 'Network error: Could not connect to the server' };
+      } else {
+        return { data: null, error: (error as any).message };
+      }
+    }
+  };
+
 
 export const submitMatchData = async (matchData: any) => {
     try {
@@ -38,6 +53,8 @@ export const submitMatchData = async (matchData: any) => {
                     winner: winner,
                     ignore_for_elo: set.ignoreforelo,
                     set_order: index + 1,
+                    team1Positions: set.team1Positions,
+                    team2Positions: set.team2Positions,
                 };
             }),
                 // Add more sets as needed

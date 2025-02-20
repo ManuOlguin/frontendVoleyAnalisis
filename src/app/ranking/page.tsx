@@ -36,7 +36,13 @@ const addMatchPage: React.FC = () => {
     <link rel="icon" href="/favicon.ico" />
   </Head>
     <div className="container mx-auto p-4 mt-8">
-      <h1 className="text-3xl text-center font-bold  mb-4">Ranking</h1>
+    <a href="/" className="text-blue-500 hover:underline flex items-center mb-4">
+        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Tuki
+      </a>
+      <h1 className="text-4xl text-center font-bold  mb-12">Ranking</h1>
       {!playerLoading ? (
         <table className="min-w-full bg-black">
           <thead>

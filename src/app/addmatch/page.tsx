@@ -11,8 +11,11 @@ const addMatchPage: React.FC = () => {
   const [date, setDate] = useState<string>("");
   const [team1Players, setTeam1Players] = useState<number[]>(Array(6).fill(0));
   const [team2Players, setTeam2Players] = useState<number[]>(Array(6).fill(0));
+  const [team1PlayersNames, setTeam1PlayersNames] = useState<string[]>(Array(6).fill(""));
+  const [team2PlayersNames, setTeam2PlayersNames] = useState<string[]>(Array(6).fill(""));
   const [setsData, setSetsData] = useState<SetData[]>();
   const [playerLoading, setPlayerLoading] = useState(true);
+  const [allDropboxesFilled, setAllDropboxesFilled] = useState(false);
 
   React.useEffect(() => {
     const loadPlayers = async () => {
@@ -40,6 +43,17 @@ const addMatchPage: React.FC = () => {
       return newSetsData;
     });
   };
+
+  const checkIfAllDropboxesFilled = () => {
+    const allPlayersSelected = [...team1Players, ...team2Players].every(playerId => playerId !== 0);
+    setAllDropboxesFilled(allPlayersSelected);
+    console.log(allPlayersSelected, team1Players, team2Players, team1PlayersNames, team2PlayersNames);
+  };
+
+  React.useEffect(() => {
+    checkIfAllDropboxesFilled();
+  }, [team1Players, team2Players]);
+
   const isPlayerSelected = (playerId: number) => {
     return team1Players.includes(playerId) || team2Players.includes(playerId);
   };
@@ -53,7 +67,7 @@ const addMatchPage: React.FC = () => {
       setsData,
     };
     await submitMatchData(matchData);
-    //window.location.reload();
+    window.location.reload();
   };
 
   return (
@@ -62,8 +76,14 @@ const addMatchPage: React.FC = () => {
     <title>Agregar Partido</title>
     <link rel="icon" href="/favicon.ico" />
   </Head>
-    <div className="container mx-auto p-4 mt-8">
-      <h1 className="text-3xl text-center font-bold  mb-4">Agregar Partido</h1>
+    <div className="container mx-auto p-2 md:p-4 mt-8 ">
+      <a href="/" className="text-blue-500 hover:underline flex items-center mb-4">
+        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Tuki
+      </a>
+      <h1 className="text-4xl text-center font-bold  mb-12">Agregar Partido</h1>
       {!playerLoading ? (
         <form className="" onSubmit={handleSubmit}>
           <div className="flex w-full justify-center mb-10">
@@ -118,6 +138,11 @@ const addMatchPage: React.FC = () => {
                     const newTeam1Players = [...team1Players];
                     newTeam1Players[index] = Number(e.target.value);
                     setTeam1Players(newTeam1Players);
+                    setTeam1PlayersNames((prevTeam1PlayersNames) => {
+                      const newTeam2PlayersNames = [...prevTeam1PlayersNames];
+                      newTeam2PlayersNames[index] = players.find((player) => player.id === Number(e.target.value))?.name ?? "";
+                      return newTeam2PlayersNames;
+                      })
                     }}
                     className="mt-1 block w-full border p-2 border-slate-600 bg-slate-700 border-2 rounded-md shadow-sm"
                     >
@@ -149,6 +174,11 @@ const addMatchPage: React.FC = () => {
                     const newTeam2Players = [...team2Players];
                     newTeam2Players[index] = Number(e.target.value);
                     setTeam2Players(newTeam2Players);
+                    setTeam2PlayersNames((prevTeam2PlayersNames) => {
+                    const newTeam2PlayersNames = [...prevTeam2PlayersNames];
+                    newTeam2PlayersNames[index] = players.find((player) => player.id === Number(e.target.value))?.name ?? "";
+                    return newTeam2PlayersNames;
+                    })
                     
                     }
                   }
@@ -172,6 +202,8 @@ const addMatchPage: React.FC = () => {
                 </div>
                 </div>
                 <div className="mt-10">
+                {allDropboxesFilled && (
+                  <>
                 <h2 className="text-xl font-semibold text-center">Resultados</h2>
                 <div className="flex flex-wrap justify-center">
                   {Array.from({ length: sets }).map((_, index) => (
@@ -179,10 +211,15 @@ const addMatchPage: React.FC = () => {
                     key={index}
                     keysita={(index + 1).toString()}
                     onDataChange={handleSetDataChange}
+                    team1Name={team1PlayersNames}
+                    team2Name={team2PlayersNames}
+                    team1Players={team1Players}
+                    team2Players={team2Players}
                   />
                   ))}
-            </div>
+            </div></>)}
           </div>
+          {allDropboxesFilled && (
           <div className="flex justify-center mt-4">
             <button
               type="submit"
@@ -190,7 +227,7 @@ const addMatchPage: React.FC = () => {
             >
               Guardar Partido
             </button>{" "}
-          </div>
+          </div>)}
         </form>
       ) : (
         <div role="status" className="flex justify-center items-center mt-20 ">
