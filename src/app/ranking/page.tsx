@@ -5,7 +5,7 @@ import { fetchPlayers, submitMatchData } from "../../utils/api";
 import { Player } from "../../utils/types";
 import SetsCard from "@/components/setsCard";
 import { SetData } from "@/components/setsCard";
-const addMatchPage: React.FC = () => {
+const Ranking: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [playerLoading, setPlayerLoading] = useState(true);
 
@@ -88,4 +88,4 @@ const addMatchPage: React.FC = () => {
   );
 };
 
-export default addMatchPage;
+export default Ranking;
