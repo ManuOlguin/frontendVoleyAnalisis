@@ -5,7 +5,8 @@ import { fetchPlayers, submitMatchData } from "../../utils/api";
 import { Player } from "../../utils/types";
 import SetsCard from "@/components/setsCard";
 import { SetData } from "@/components/setsCard";
-const addMatchPage: React.FC = () => {
+import Link from "next/link";
+const AddMatchPage: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [sets, setSets] = useState<number>(5);
   const [date, setDate] = useState<string>("");
@@ -77,12 +78,12 @@ const addMatchPage: React.FC = () => {
     <link rel="icon" href="/favicon.ico" />
   </Head>
     <div className="container mx-auto p-2 md:p-4 mt-8 ">
-      <a href="/" className="text-blue-500 hover:underline flex items-center mb-4">
+      <Link href="/" className="text-blue-500 hover:underline flex items-center mb-4">
         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
         </svg>
         Tuki
-      </a>
+      </Link>
       <h1 className="text-4xl text-center font-bold  mb-12">Agregar Partido</h1>
       {!playerLoading ? (
         <form className="" onSubmit={handleSubmit}>
@@ -255,4 +256,4 @@ const addMatchPage: React.FC = () => {
   );
 };
 
-export default addMatchPage;
+export default AddMatchPage;
