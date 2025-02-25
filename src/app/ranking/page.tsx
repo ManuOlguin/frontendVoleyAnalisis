@@ -43,22 +43,32 @@ const Ranking: React.FC = () => {
       </Link>
       <h1 className="text-4xl text-center font-bold  mb-12">Ranking</h1>
       {!playerLoading ? (
-        <table className="min-w-full bg-black">
-          <thead>
+        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-gray-800 text-white">
             <tr>
-              <th className="py-2">Name</th>
-              <th className="py-2">ELO</th>
+              <th className="py-3 px-4 text-left">Jugador</th>
+              <th className="py-3 px-4 text-left">ELO</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-gray-700">
             {players
               .sort((a, b) => (b.elo ?? 0) - (a.elo ?? 0))
-              .map((player) => (
-          <tr key={player.id} className="border-t">
-            <td className="py-2 px-4">{player.name}</td>
-            <td className="py-2 px-4">{player.elo}</td>
-          </tr>
-              ))}
+              .map((player) => {
+          let rowClass = "";
+          if (player.elo !== null && player.elo >= 900 && player.elo <= 1100) {
+            rowClass = "bg-gradient-to-r from-red-500 to-red-600 transition duration-500 ease-in-out transform ";
+          } else if (player.elo !== null && player.elo >= 1101 && player.elo <= 1200) {
+            rowClass = "bg-yellow-400";
+          } else if (player.elo !== null && player.elo > 1200) {
+            rowClass = "bg-green-100";
+          }
+          return (
+            <tr key={player.id} className={`border-t ${rowClass} font-semibold`}>
+              <td className="py-2 px-4">{player.name}</td>
+              <td className="py-2 px-4">{player.elo}</td>
+            </tr>
+          );
+              })}
           </tbody>
         </table>
       ) : (
