@@ -2,11 +2,9 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import { addPlayer } from "../../utils/api";
-import { Player, Match, Player2 } from "../../utils/types";
+import { Player } from "../../utils/types";
 import Link from "next/link";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStarOfDavid } from "@fortawesome/free-solid-svg-icons"; // Use the solid version
 const Ranking: React.FC = () => {
 
   const [name, setName] = useState("");

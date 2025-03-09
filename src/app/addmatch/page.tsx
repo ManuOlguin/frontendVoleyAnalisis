@@ -6,8 +6,7 @@ import { Player } from "../../utils/types";
 import SetsCard from "@/components/setsCard";
 import { SetData } from "@/components/setsCard";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStarOfDavid } from "@fortawesome/free-solid-svg-icons"; // Use the solid version
+
 const AddMatchPage: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [sets, setSets] = useState<number>(5);

@@ -8,11 +8,9 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarOfDavid } from "@fortawesome/free-solid-svg-icons"; // Use the solid version
 const Ranking: React.FC = () => {
-  const [players, setPlayers] = useState<Player[]>([]);
+
   const [playerLoading, setPlayerLoading] = useState(true);
   const [playersup, setPlayersup] = useState<Player2[]>([]);
-  const [matches, setMatches] = useState<Match[]>([]);
-  const [matchLoading, setMatchLoading] = useState(true);
   const [protas, setProtas] = useState
   <boolean>(false);
   React.useEffect(() => {
@@ -23,8 +21,6 @@ const Ranking: React.FC = () => {
         if (data.error) {
           return;
         }
-        setPlayers(data.data);
-        setPlayerLoading(false);
 
         return data.data;
       } catch (error) {
@@ -34,13 +30,10 @@ const Ranking: React.FC = () => {
 
     const loadMatches = async () => {
       try {
-        setMatchLoading(true);
         const data = await fetchMatches();
         if (data.error) {
           return;
         }
-        setMatchLoading(false);
-        setMatches(data.data);
         return data.data;
       } catch (error) {
         console.error("Error fetching matches:", error);
@@ -94,6 +87,7 @@ const Ranking: React.FC = () => {
         };
       });
       setPlayersup(updatedPlayers);
+      setPlayerLoading(false);
 
       console.log("datitaRiquita", updatedPlayers);
     };
@@ -164,24 +158,24 @@ const Ranking: React.FC = () => {
               {playersup
                 .sort((a, b) => (b.elo ?? 0) - (a.elo ?? 0))
                 .map((player) => {
-                  let elo = player.elo ?? 700; // Default to 700 if null
-                  let minElo = 700;
-                  let maxElo = 1300;
+                  const elo = player.elo ?? 700; // Default to 700 if null
+                  const minElo = 700;
+                  const maxElo = 1300;
 
                   // Normalize the ELO value between 0 and 1
-                  let normalized = Math.max(
+                  const normalized = Math.max(
                     0,
                     Math.min(1, (elo - minElo) / (maxElo - minElo))
                   );
 
                   // Calculate background color (black → purple)
-                  let red = Math.round(128 * normalized);
-                  let blue = Math.round(255 * normalized);
-                  let bgColor = `rgb(${red}, 0, ${blue})`;
+                  const red = Math.round(128 * normalized);
+                  const blue = Math.round(255 * normalized);
+                  const bgColor = `rgb(${red}, 0, ${blue})`;
 
                   // Calculate text color (white → black)
-                  let textGray = Math.round(255 * normalized) + 40; // Inverse of red
-                  let textColor = `rgb(${textGray}, ${textGray}, ${textGray})`;
+                  const textGray = Math.round(255 * normalized) + 40; // Inverse of red
+                  const textColor = `rgb(${textGray}, ${textGray}, ${textGray})`;
 
                   return (
                     <tr
