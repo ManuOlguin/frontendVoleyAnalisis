@@ -100,7 +100,7 @@ const Ranking: React.FC = () => {
         <title>Ranking</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mx-auto p-4 mt-8 font-PT_Sans">
+      <div className="  md:p-4 mt-8 font-PT_Sans">
         <Link
           href="/"
           className="text-blue-500 hover:underline flex items-center mb-4 "
@@ -143,15 +143,17 @@ const Ranking: React.FC = () => {
 
             </label>
         </div>
+        <div className="flex justify-center">
         {!playerLoading ? (
-          <table className="shadow-md rounded-lg overflow-hidden mx-auto">
+            <table className="shadow-md rounded-lg overflow-hidden border-separate border-spacing-0">
             <thead className="bg-purple-600 text-purple-100">
               <tr>
                 <th className="py-3 text-left"></th>
                 <th className="py-3 px-4 text-left">#</th>
                 <th className="py-3 px-4 text-left">Jugador</th>
                 <th className="py-3 px-4 text-left">ELO</th>
-                <th className="py-3 p-4 text-left">Winrate %</th>
+                <th className="py-3 hidden md:block p-4 text-left">Winrate %</th>
+                <th className="py-3 block md:hidden p-4 text-left">WR %</th>
               </tr>
             </thead>
             <tbody className="text-gray-700">
@@ -161,60 +163,36 @@ const Ranking: React.FC = () => {
                   const elo = player.elo ?? 700; // Default to 700 if null
                   const minElo = 700;
                   const maxElo = 1300;
-
-                  // Normalize the ELO value between 0 and 1
-                  const normalized = Math.max(
-                    0,
-                    Math.min(1, (elo - minElo) / (maxElo - minElo))
-                  );
-
-                  // Calculate background color (black → purple)
+                  const normalized = Math.max(0, Math.min(1, (elo - minElo) / (maxElo - minElo)));
                   const red = Math.round(128 * normalized);
                   const blue = Math.round(255 * normalized);
                   const bgColor = `rgb(${red}, 0, ${blue})`;
-
-                  // Calculate text color (white → black)
-
+          
                   return (
                     <tr
                       key={player.id}
-                      className="font-semibold "
-                      style={{backgroundColor: bgColor, display: protas && !player.prota ? "none" : "table-row" }}
+                      className="font-semibold"
+                      style={{ backgroundColor: bgColor, display: protas && !player.prota ? "none" : "table-row" }}
                     >
                       <td className="py-2 pl-3 w-1 text-purple-700">
-                        {player.prota && (
-                          <FontAwesomeIcon icon={faStarOfDavid} />
-                        )}
+                        {player.prota && <FontAwesomeIcon icon={faStarOfDavid} />}
                       </td>
                       <td className="py-2 px-4 text-center text-purple-400">
                         {playersup.indexOf(player) + 1}
                       </td>
-                      <td className="py-2 px-4 text-purple-200">
-                        {player.name}
-                      </td>
-                      <td className="py-2 px-4 text-purple-300">
-                        {player.elo?.toFixed(2)}
-                      </td>
-                      <td className="py-2 px-4 text-purple-400  ">
-                        <div className="flex w-28 text-white items-center justify-between font-normal text-sm">
-
-
-                          <div className=" bg-purple-800 rounded-md w-16">
+                      <td className="pl-2 px-4 text-purple-200">{player.name}</td>
+                      <td className="py-2 px-4 text-purple-300">{player.elo?.toFixed(2)}</td>
+                      <td className="py-2 px-4 text-purple-400">
+                        <div className="flex md:w-28 text-white items-center justify-between font-normal text-sm">
+                          <div className="bg-purple-800 rounded-md w-16 md:block hidden">
                             <div
                               className="py-2 bg-purple-400 rounded-md"
                               style={{
-                                width: `${
-                                  player.winPercentage > 0
-                                    ? player.winPercentage
-                                    : 0
-                                }%`,
+                                width: `${player.winPercentage > 0 ? player.winPercentage : 0}%`,
                               }}
                             ></div>
-                            
                           </div>
-                          <div className="">
-                            {player.winPercentage.toFixed(0)}%
-                          </div>
+                          <div>{player.winPercentage.toFixed(0)}%</div>
                         </div>
                       </td>
                     </tr>
@@ -222,6 +200,7 @@ const Ranking: React.FC = () => {
                 })}
             </tbody>
           </table>
+          
         ) : (
           <div role="status" className="flex justify-center items-center mt-20">
             <svg
@@ -243,6 +222,7 @@ const Ranking: React.FC = () => {
             <span className="sr-only">Loading...</span>
           </div>
         )}
+        </div>
       </div>
     </>
   );
