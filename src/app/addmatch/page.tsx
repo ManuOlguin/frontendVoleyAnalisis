@@ -6,6 +6,8 @@ import { Player } from "../../utils/types";
 import SetsCard from "@/components/setsCard";
 import { SetData } from "@/components/setsCard";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStarOfDavid } from "@fortawesome/free-solid-svg-icons"; // Use the solid version
 const AddMatchPage: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [sets, setSets] = useState<number>(5);
@@ -147,16 +149,37 @@ const AddMatchPage: React.FC = () => {
                     }}
                     className="mt-1 block w-full border p-2 border-slate-600 bg-slate-700 border-2 rounded-md shadow-sm"
                     >
-                    <option value=""  hidden>
-                    </option>                    {players.map((player) => (
-                    <option
-                    key={player.id}
-                    value={player.id}
-                    disabled={isPlayerSelected(player.id) && team1Players[index] !== player.id}
-                    >
-                      {player.name}
+                    <option value="" hidden>
+                    </option>
+                    <option value="" disabled>
+                                            --- Protas ---
+                                          </option>
+                    {players
+                      .filter((player) => player.prota)
+                      .map((player) => (
+                      <option
+                        key={player.id}
+                        value={player.id}
+                        disabled={isPlayerSelected(player.id) && team1Players[index] !== player.id}
+                      >
+                        {player.name}
                       </option>
-                    ))}
+                      ))}
+                                          <option value="" disabled>
+                                            --- Side Characters ---
+                                          </option>
+                    {players
+                      .filter((player) => !player.prota)
+                      .map((player) => (
+                      <option
+                        key={player.id}
+                        value={player.id}
+                        disabled={isPlayerSelected(player.id) && team1Players[index] !== player.id}
+                      >
+                        {player.name}
+                      </option>
+                      ))}
+                    
                     </select>
                   </div>
                   ))}
