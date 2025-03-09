@@ -175,7 +175,6 @@ const Ranking: React.FC = () => {
 
                   // Calculate text color (white → black)
                   const textGray = Math.round(255 * normalized) + 40; // Inverse of red
-                  const textColor = `rgb(${textGray}, ${textGray}, ${textGray})`;
 
                   return (
                     <tr
