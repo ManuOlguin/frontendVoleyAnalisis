@@ -39,6 +39,11 @@ export default function Home() {
           Ranking
         </button>
       </Link>
+      <Link href="/addplayer">
+        <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg transform transition-transform hover:scale-105 ml-5">
+          Agregar Jugador
+        </button>
+      </Link>
       </div>
       <h2 className="text-3xl font-semibold mt-12">Partidos</h2>
       {matchesLoading ? (
